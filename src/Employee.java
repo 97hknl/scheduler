@@ -31,44 +31,8 @@ public class Employee implements EmployeeInterface, Comparable<EmployeeInterface
 		maxShifts++;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public ArrayList<LanguageInterface> getLanguages() {
-		return languages;
-	}
-
-	public ArrayList<ShiftInterface> getPreferredShifts() {
-		return preferredShifts;
-	}
-
-	public ArrayList<ShiftInterface> getAvailableShifts() {
-		return availableShifts;
-	}
-
 	public boolean isSentinel() {
 		return sentinel;
-	}
-
-	public void setSentinel(boolean sentinel) {
-		this.sentinel = sentinel;
-	}
-
-	public int getMaxShifts() {
-		return maxShifts;
-	}
-
-	public int getMinShifts() {
-		return minShifts;
-	}
-	
-	public int getAllowedNumberOfShifts() {
-		return allowedNumberOfShifts;
-	}
-	
-	public int getNumberOfAssignedShifts() {
-		return numberOfAssignedShifts;
 	}
 	
 	public void assignShift(ShiftInterface shift) {
@@ -89,7 +53,53 @@ public class Employee implements EmployeeInterface, Comparable<EmployeeInterface
 		
 		return false;
 	}
+	
+	//getters:
+	public int getMaxShifts() {
+		return maxShifts;
+	}
 
+	public int getMinShifts() {
+		return minShifts;
+	}
+	
+	public int getAllowedNumberOfShifts() {
+		return allowedNumberOfShifts;
+	}
+	
+	public int getNumberOfAssignedShifts() {
+		return numberOfAssignedShifts;
+	}
+	
+	public int getPriority() {
+		return priority;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public ArrayList<LanguageInterface> getLanguages() {
+		return languages;
+	}
+
+	public ArrayList<ShiftInterface> getPreferredShifts() {
+		return preferredShifts;
+	}
+
+	public ArrayList<ShiftInterface> getAvailableShifts() {
+		return availableShifts;
+	}
+	
+	//setters:
+	public void setSentinel(boolean sentinel) {
+		this.sentinel = sentinel;
+	}
+	
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+	
 	public int compareTo(EmployeeInterface o, ShiftInterface shift) {
 		//check if exactly one of them are able to work on this shift
 		if(!this.isAvailableOn(shift, true)) {
