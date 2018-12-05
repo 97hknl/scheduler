@@ -1,5 +1,7 @@
+import java.util.Comparator;
+
 //https://stackoverflow.com/questions/31199035/how-to-send-multiple-arguments-to-compareto-to-filter-sorting-type-and-sort-by-i
-public class DynamicComprator implements Comparable<EmployeeInterface>{
+public class DynamicComprator implements Comparator<EmployeeInterface>{
 	private static ShiftInterface shift;
 
 	public DynamicComprator(ShiftInterface shift) {
@@ -13,8 +15,20 @@ public class DynamicComprator implements Comparable<EmployeeInterface>{
 
 	//sort in descending order. If b comes first, return 1. If a comes first, return -1.
 	public int compare(EmployeeInterface a, EmployeeInterface b) {
-		//check if a/b have worked previous continuous shift
-		
+
+		//check if exactly one of them have worked previous continuous shift
+		if(shift.getPreviousShift() != null) {
+			if(shift.getPreviousShift().getSelectedEmployees().contains(a)) {
+				if(!shift.getPreviousShift().getSelectedEmployees().contains(b)) {
+					return 1;
+				}
+			} else {
+				if(shift.getPreviousShift().getSelectedEmployees().contains(b)) {
+					return -1;
+				}
+			}
+		}
+
 		//check if exactly one of them are able to work on this shift
 		if(!a.isAvailableOn(shift, true)) {
 			if(b.isAvailableOn(shift, true))			
@@ -43,10 +57,10 @@ public class DynamicComprator implements Comparable<EmployeeInterface>{
 		//check who speaks more languages (weight: 25%)
 		int aNumLanguages = 0;
 		int bNumLanguages = 0;
-		for(int i=0; i<shift.requiredLanguages.size(); i++) {
-			if(a.getLanguages().contains(shift.requiredLanguages.get(i)))
+		for(int i=0; i<shift.getRequiredLanguages().size(); i++) {
+			if(a.getLanguages().contains(shift.getRequiredLanguages().get(i)))
 				aNumLanguages++;
-			if(b.getLanguages().contains(shift.requiredLanguages.get(i)))
+			if(b.getLanguages().contains(shift.getRequiredLanguages().get(i)))
 				bNumLanguages++;
 		}
 
@@ -71,9 +85,7 @@ public class DynamicComprator implements Comparable<EmployeeInterface>{
 		int aDiffAvailableShifts = a.getMaxShifts() - a.getNumberOfAssignedShifts();
 		int bDiffAvailableShifts = b.getMaxShifts() - b.getNumberOfAssignedShifts();
 
-		//check who has more priority (weight: 15) ??
-		
-		//compare b to other shift iobject, not same.
+		//check who has more priority (weight: 15)
 
 		//calculate points based on the above metrics
 		double aPoints = 0.25 * aNumLanguages
@@ -89,17 +101,10 @@ public class DynamicComprator implements Comparable<EmployeeInterface>{
 
 		//award shift to the person having most points, else randomize
 		if(aPoints != bPoints) {
-			// include priority here?
 			return (aPoints > bPoints)? -1 : 1;
 		} else {
 			double x = Math.random();
-			if(x > 0.5) {
-				b.setPriority(b.getPriority() + 1); //exponential increase?
-				return 1;
-			} else {
-				a.setPriority(a.getPriority() + 1);
-				return -1;
-			}
+			return (x > 0.5)? 1 : -1;
 		}
 	}
 }

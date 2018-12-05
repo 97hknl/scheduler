@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Employee implements EmployeeInterface, Comparable<EmployeeInterface>{
+public class Employee implements EmployeeInterface{
 	private String name;
 	private ArrayList<LanguageInterface> languages;
 	private ArrayList<ShiftInterface> preferredShifts;
@@ -100,6 +100,7 @@ public class Employee implements EmployeeInterface, Comparable<EmployeeInterface
 		this.priority = priority;
 	}
 	
+	/*
 	public int compareTo(EmployeeInterface o, ShiftInterface shift) {
 		//check if exactly one of them are able to work on this shift
 		if(!this.isAvailableOn(shift, true)) {
@@ -186,5 +187,5 @@ public class Employee implements EmployeeInterface, Comparable<EmployeeInterface
 				return -1;
 			}
 		}
-	}
+	} */
 }

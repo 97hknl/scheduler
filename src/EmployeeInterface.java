@@ -17,6 +17,6 @@ public interface EmployeeInterface {
 	int getAllowedNumberOfShifts();
 	boolean isAvailableOn(ShiftInterface shift, boolean checkAvailableShifts);
 	void assignShift(ShiftInterface shift);
-	int compareTo(EmployeeInterface o);
+	//int compareTo(EmployeeInterface o);
 	String toString();
 }
